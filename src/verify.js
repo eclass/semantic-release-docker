@@ -1,4 +1,8 @@
+const AggregateError = require('aggregate-error')
+
 const getError = require('./get-error')
+const dockerLogin = require('./dockerLogin')
+const getAuth = require('./getAuth')
 
 /**
  * @typedef {import('semantic-release').Context} Context
@@ -7,12 +11,19 @@ const getError = require('./get-error')
 /**
  * @param {Config} pluginConfig -
  * @param {Context} ctx -
- * @returns {*} -
+ * @returns {Promise<*>} -
  * @example
  * verifyConditions(pluginConfig, ctx)
  */
-module.exports = (pluginConfig, ctx) => {
-  if (!ctx.env.CUSTOM_ENV) {
-    throw getError('CUSTOMERROR')
+module.exports = async (pluginConfig, ctx) => {
+  try {
+    const { user, pass, registryUrl } = await getAuth(pluginConfig, ctx)
+    return dockerLogin(user, pass, registryUrl)
+  } catch (err) {
+    if (err instanceof AggregateError) {
+      throw err
+    } else {
+      throw new AggregateError([getError('EDOCKERLOGIN', ctx)])
+    }
   }
 }
