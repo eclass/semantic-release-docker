@@ -6,12 +6,17 @@ export interface Context extends SemanticReleaseContext {
   message?: string
 }
 
+export interface Registry {
+  url?: string
+  imageName?: string
+  user?: string
+  password?: string
+}
+
 export interface Config extends SemanticReleaseConfig {
   additionalTags?: string[]
-  additionalRepos?: string[]
-  imageName?: string
-  ecr?: boolean
-  registryUrl?: string
+  registries?: Registry[]
+  baseImageName?: string
 }
 
 export interface ExecOptions {

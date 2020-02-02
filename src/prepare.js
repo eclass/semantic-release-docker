@@ -17,29 +17,23 @@ const getError = require('./get-error')
 module.exports = async (pluginConfig, ctx) => {
   try {
     const docker = new Dockerode()
-    const imageName = ctx.env.CI_REGISTRY_IMAGE || pluginConfig.imageName
-    const image = docker.getImage(imageName)
+    const image = docker.getImage(pluginConfig.baseImageName)
     const tags = [ctx.nextRelease.version]
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
     for (const tag of tags) {
       ctx.logger.log(
-        `Tagging docker image ${imageName}:latest to ${imageName}:${tag}`
+        `Tagging docker image ${pluginConfig.baseImageName}:latest to ${pluginConfig.baseImageName}:${tag}`
       )
-      await image.tag({ repo: imageName, tag })
+      await image.tag({ repo: pluginConfig.baseImageName, tag })
     }
-    if (
-      pluginConfig.additionalRepos &&
-      pluginConfig.additionalRepos.length > 0
-    ) {
-      for (const repo of pluginConfig.additionalRepos) {
-        for (const tag of [...tags, 'latest']) {
-          ctx.logger.log(
-            `Tagging docker image ${imageName}:latest to ${repo}:${tag}`
-          )
-          await image.tag({ repo, tag })
-        }
+    for (const { imageName } of pluginConfig.registries) {
+      for (const tag of [...tags, 'latest']) {
+        ctx.logger.log(
+          `Tagging docker image ${pluginConfig.baseImageName}:latest to ${imageName}:${tag}`
+        )
+        await image.tag({ repo: imageName, tag })
       }
     }
   } catch (err) {

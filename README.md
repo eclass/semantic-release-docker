@@ -9,11 +9,11 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/f84f0bcb39c9a5c5fb99/maintainability)](https://codeclimate.com/github/eclass/semantic-release-docker/maintainability)
 [![semantic-release](https://img.shields.io/badge/%20%20%F0%9F%93%A6%F0%9F%9A%80-semantic--release-e10079.svg)](https://github.com/semantic-release/semantic-release)
 
-> [semantic-release](https://github.com/semantic-release/semantic-release) plugin to deploy app
+> [semantic-release](https://github.com/semantic-release/semantic-release) plugin to tag and push docker images
 
 | Step               | Description                                                                                 |
 |--------------------|---------------------------------------------------------------------------------------------|
-| `verifyConditions` | Verify the presence of the `CI_REGISTRY_USER`, or `DOCKER_REGISTRY_USER`, `DOCKER_REGISTRY_PASSWORD` or `CI_REGISTRY_PASSWORD`, `CI_REGISTRY` or `CI_REGISTRY`, and `CI_REGISTRY_IMAGE` environment variable. |
+| `verifyConditions` | Verify the presence of the `baseImageName`, and `registries` options in plugin config. |
 | `prepare`          | Tag docker images.                                                                   |
 | `publish`          | Push docker images.                                                                   |
 
@@ -41,37 +41,26 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 ## Configuration
 
-### Environment variables
+### Options
 
 | Variable             | Description                                                       |
 | -------------------- | ----------------------------------------------------------------- |
-| `CI_REGISTRY_USER` | username for docker in gitlab ci. Only required if push images to gitlab docker registry. |
-| `CI_REGISTRY_PASSWORD` | password for docker in gitlab ci. Only required if push images to gitlab docker registry. |
-| `CI_REGISTRY` | registry for docker in gitlab ci. Only required if push images to gitlab docker registry. |
-| `CI_REGISTRY_IMAGE` | image name for docker in gitlab ci. Only required if push images to gitlab docker registry. |
-| `DOCKER_REGISTRY_USER` | username for generic docker. |
-| `DOCKER_REGISTRY_PASSWORD` | password for generic docker. |
-| `DOCKER_REGISTRY` | registry for generic docker. Optional. Its posible set in config plgin |
-| `AWS_ACCESS_KEY_ID` | aws access key for get docker credentials from ecr. Optional. Only use if push images to ecr |
-| `AWS_SECRET_ACCESS_KEY` | aws secret key for get docker credentials from ecr. Optional. Only use if push images to ecr |
-| `AWS_REGION` | aws region for get docker credentials from ecr. Optional. Only use if push images to ecr |
+| `baseImageName` | Name of the previously constructed docker image. Required. |
+| `registries` | Array of objects with username, password, url and imageName. "username" and "password" are environment variables. Required. Example: `{"username": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"}` |
+| `additionalTags` | Array of addiotional tags to push. Optional. Example: `["beta", "next"]` |
+
+### Environment variables
+
+Environment variables are variables. Depends of `registries` option.
+
+| Variable             | Description                                                       |
+| -------------------- | ----------------------------------------------------------------- |
+| `DOCKER_USER` | username for docker registry. |
+| `DOCKER_PASSWORD` | password for docker registry. |
 
 ### Examples
 
-In Gitlab CI
-```json
-{
-  "plugins": [
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    "@semantic-release/git",
-    "@semantic-release/gitlab",
-    "@eclass/semantic-release-docker"
-  ]
-}
-```
-
-Push images to other docker registry
+Push images to many docker registry
 ```json
 {
   "plugins": [
@@ -82,71 +71,36 @@ Push images to other docker registry
     [
       "@eclass/semantic-release-docker",
       {
-        "registryUrl": "registry.example.com",
-        "imageName": "registry.example.com/myapp"
-      }
-    ]
-  ]
-}
-```
-
-Push images to aws ecr
-```json
-{
-  "plugins": [
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    "@semantic-release/git",
-    "@semantic-release/gitlab",
-    [
-      "@eclass/semantic-release-docker",
-      {
-        "ecr": true,
-        "imageName": "1111.dkr.ecr.us-east-1.amazonaws.com/myapp"
-      }
-    ]
-  ]
-}
-```
-
-Push images with aditional tags
-```json
-{
-  "plugins": [
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    "@semantic-release/git",
-    "@semantic-release/gitlab",
-    [
-      "@eclass/semantic-release-docker",
-      {
-        "ecr": true,
-        "imageName": "1111.dkr.ecr.us-east-1.amazonaws.com/myapp",
+        "baseImageName": "myapp",
+        "registries": [
+          {
+            "url": "registry.gitlab.com",
+            "imageName": "registry.gitlab.com/mygroup/myapp",
+            "user": "CI_REGISTRY_USER",
+            "password": "CI_REGISTRY_PASSWORD"
+          },
+          {
+            "url": "docker.io",
+            "imageName": "docker.io/myuser/myapp",
+            "user": "DOCKER_REGISTRY_USER",
+            "password": "DOCKER_REGISTRY_PASSWORD"
+          },
+          {
+            "url": "docker.pkg.github.com",
+            "imageName": "docker.pkg.github.com/myuser/myrepo/myapp",
+            "user": "GITHUB_USER",
+            "password": "GITHUB_TOKEN"
+          },
+          {
+            "url": "123456789012.dkr.ecr.us-east-1.amazonaws.com",
+            "imageName": "123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp",
+            "user": "AWS_DOCKER_USER",
+            "password": "AWS_DOCKER_PASSWORD"
+          }
+        ],
         "additionalTags": [
           "next",
           "beta"
-        ]
-      }
-    ]
-  ]
-}
-```
-
-Push images to aditional registries
-```json
-{
-  "plugins": [
-    "@semantic-release/changelog",
-    "@semantic-release/npm",
-    "@semantic-release/git",
-    "@semantic-release/gitlab",
-    [
-      "@eclass/semantic-release-docker",
-      {
-        "ecr": true,
-        "imageName": "1111.dkr.ecr.us-east-1.amazonaws.com/myapp",
-        "additionalRepos": [
-          "registry.example.com"
         ]
       }
     ]
@@ -159,6 +113,8 @@ Push images to aditional registries
 release:
   image: node:alpine
   stage: release
+  before_script:
+    - docker build -t myapp .
   script:
     - npx semantic-release
   only:
@@ -182,6 +138,7 @@ jobs:
     - stage: test
       script: npm t
     - stage: deploy
+      before_script: docker build -t myapp .
       script: npx semantic-release
 
 ```

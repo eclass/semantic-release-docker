@@ -22,6 +22,19 @@ const linkify = file => `${homepage}/blob/master/${file}`
 
 module.exports = new Map([
   [
+    'ENOREGISTRY',
+    /**
+     * @param {Context} ctx -
+     * @returns {SemanticReleaseError} -
+     */
+    ctx => ({
+      message: 'No registry specified.',
+      details: `An [registry](${linkify(
+        'README.md#options'
+      )}) must be set in the \`registries\` key in plugin config.`
+    })
+  ],
+  [
     'ENODOCKERUSER',
     /**
      * @param {Context} ctx -
@@ -31,7 +44,7 @@ module.exports = new Map([
       message: 'No docker username specified.',
       details: `An [docker username](${linkify(
         'README.md#environment-variables'
-      )}) must be created and set in the \`CI_REGISTRY_USER\` or \`DOCKER_REGISTRY_USER\` environment variable on your CI environment.`
+      )}) must be created and set the environment variable on your CI environment defined in \`registries\`.`
     })
   ],
   [
@@ -44,7 +57,7 @@ module.exports = new Map([
       message: 'No docker password specified.',
       details: `An [docker password](${linkify(
         'README.md#environment-variables'
-      )}) must be created and set in the \`CI_REGISTRY_PASSWORD\` or \`DOCKER_REGISTRY_PASSWORD\` environment variable on your CI environment.`
+      )}) must be created and set the environment variable on your CI environment defined in \`registries\`.`
     })
   ],
   [
@@ -56,8 +69,21 @@ module.exports = new Map([
     ctx => ({
       message: 'No docker registry specified.',
       details: `An [docker registry](${linkify(
-        'README.md#environment-variables'
-      )}) must be created and set in the \`CI_REGISTRY\`, \`DOCKER_REGISTRY\` environment variable on your CI environment or set \`registryUrl\`. in plugin config`
+        'README.md#options'
+      )}) must be set \`url\` in \`registries\`.`
+    })
+  ],
+  [
+    'ENOBASEIMAGENAME',
+    /**
+     * @param {Context} ctx -
+     * @returns {SemanticReleaseError} -
+     */
+    ctx => ({
+      message: 'No docker base image name specified.',
+      details: `An [docker base image name](${linkify(
+        'README.md#options'
+      )}) must be set \`baseImageName\` in in plugin config.`
     })
   ],
   [
@@ -69,58 +95,8 @@ module.exports = new Map([
     ctx => ({
       message: 'No docker image name specified.',
       details: `An [docker image name](${linkify(
-        'README.md#environment-variables'
-      )}) must be created and set in the \`CI_REGISTRY_IMAGE\` environment variable on your CI environment or set \`imageName\`. in plugin config`
-    })
-  ],
-  [
-    'ENOAWSACCESSKEYID',
-    /**
-     * @param {Context} ctx -
-     * @returns {SemanticReleaseError} -
-     */
-    ctx => ({
-      message: 'No aws access key specified.',
-      details: `An [aws access key](${linkify(
-        'README.md#environment-variables'
-      )}) must be created and set in the \`AWS_ACCESS_KEY_ID\` environment variable on your CI environment.`
-    })
-  ],
-  [
-    'ENOAWSSECRETACCESSKEY',
-    /**
-     * @param {Context} ctx -
-     * @returns {SemanticReleaseError} -
-     */
-    ctx => ({
-      message: 'No aws secret key specified.',
-      details: `An [aws secret key](${linkify(
-        'README.md#environment-variables'
-      )}) must be created and set in the \`AWS_SECRET_ACCESS_KEY\` environment variable on your CI environment.`
-    })
-  ],
-  [
-    'ENOAWSREGION',
-    /**
-     * @param {Context} ctx -
-     * @returns {SemanticReleaseError} -
-     */
-    ctx => ({
-      message: 'No aws region specified.',
-      details: `An [aws region](${linkify(
-        'README.md#environment-variables'
-      )}) must be created and set in the \`AWS_REGION\` environment variable on your CI environment.`
-    })
-  ],
-  [
-    'EECRLOGIN',
-    /**
-     * @param {Context} ctx -
-     * @returns {SemanticReleaseError} -
-     */
-    ctx => ({
-      message: 'Error retrive ecr credentials.',
-      details: 'Try get docker credentials from ecr.'
+        'README.md#options'
+      )}) must be set \`imageName\` in \`registries\`.`
     })
   ],
   [
@@ -142,7 +118,7 @@ module.exports = new Map([
      */
     ctx => ({
       message: 'Error tag docker image.',
-      details: 'Error tag docker image.'
+      details: 'Error tag docker image. Check credentials in `registries`.'
     })
   ],
   [
@@ -153,7 +129,7 @@ module.exports = new Map([
      */
     ctx => ({
       message: 'Error tag docker push.',
-      details: 'Error tag docker push.'
+      details: 'Error tag docker push. Check credentials in `registries`.'
     })
   ]
 ])
