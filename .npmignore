@@ -4,3 +4,4 @@ coverage
 test
 .*
 *.md
+tsconfig.json
