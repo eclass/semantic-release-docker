@@ -1,0 +1,27 @@
+name: Node.js CI
+
+on: [push]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: actions/setup-node@v1
+      with:
+        node-version: "12.14.1"
+    - run: npm ci
+    - name: eslint
+      run: npx eslint .
+    - name: test
+      run: npm test
+      env:
+        CI: true
+    - name: coverage
+      run: |
+        npm i -g coveralls
+        npx nyc check-coverage --lines 85 --per-file
+        npx nyc report > lcov.info
+        coveralls < lcov.info
