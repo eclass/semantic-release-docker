@@ -10,6 +10,14 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: "12.14.1"
+    - uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - run: npm ci
     - name: eslint
       run: npx eslint .
@@ -24,6 +32,14 @@ jobs:
     - uses: actions/setup-node@v1
       with:
         node-version: "12.14.1"
+    - uses: actions/cache@v1
+      with:
+        path: ~/.npm
+        key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+        restore-keys: |
+          ${{ runner.os }}-build-${{ env.cache-name }}-
+          ${{ runner.os }}-build-
+          ${{ runner.os }}-
     - run: npm ci
     - name: coverage
       run: |
@@ -42,6 +58,14 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12.14.1"
+      - uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}-
       - run: npm ci
       - run: npx semantic-release
         env:
