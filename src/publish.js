@@ -2,6 +2,7 @@ const AggregateError = require('aggregate-error')
 const Dockerode = require('dockerode')
 
 const getError = require('./get-error')
+const getAuth = require('./getAuth')
 
 /** @typedef {import('stream').Readable} ReadableStream */
 /**
@@ -12,8 +13,23 @@ const getError = require('./get-error')
  */
 const pushImage = response => {
   return new Promise((resolve, reject) => {
-    response.on('end', () => resolve())
-    response.on('error', error => reject(error))
+    let error
+    response.on('data', chunk => {
+      const data = JSON.parse(chunk.toString())
+      if (data.error) {
+        error = new Error(data.error)
+      }
+    })
+    response.on('end', () => {
+      if (error) {
+        reject(error)
+      } else {
+        resolve()
+      }
+    })
+    response.on('error', error => {
+      reject(error)
+    })
   })
 }
 
@@ -35,7 +51,14 @@ module.exports = async (pluginConfig, ctx) => {
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
-    for (const { user, password, url, imageName } of pluginConfig.registries) {
+    for (const registry of pluginConfig.registries) {
+      const { user, password, url, imageName } = getAuth(
+        registry.user,
+        registry.password,
+        registry.url,
+        registry.imageName,
+        ctx
+      )
       const image = docker.getImage(imageName)
       const options = {
         password: password,

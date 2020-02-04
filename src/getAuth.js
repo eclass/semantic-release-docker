@@ -14,27 +14,38 @@ const getError = require('./get-error')
  * @param {string} registry -
  * @param {string} imageName -
  * @param {Context} ctx -
- * @returns {void} -
+ * @returns {Registry} -
  * @example
  * verifyConditions(pluginConfig, ctx)
  */
 const getAuth = (user, password, registry, imageName, ctx) => {
   const errors = []
+  /** @type {import('./types').Registry} */
+  const auth = {}
   if (!user || !ctx.env[user]) {
     errors.push(getError('ENODOCKERUSER', ctx))
+  } else {
+    auth.user = ctx.env[user]
   }
   if (!password || !ctx.env[password]) {
     errors.push(getError('ENODOCKERPASSWORD', ctx))
+  } else {
+    auth.password = ctx.env[password]
   }
   if (!registry) {
     errors.push(getError('ENODOCKERREGISTRY', ctx))
+  } else {
+    auth.url = registry
   }
   if (!imageName) {
     errors.push(getError('ENOIMAGENAME', ctx))
+  } else {
+    auth.imageName = imageName
   }
   if (errors.length > 0) {
     throw new AggregateError(errors)
   }
+  return auth
 }
 
 module.exports = getAuth
