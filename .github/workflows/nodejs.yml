@@ -25,6 +25,10 @@ jobs:
       run: npm test
       env:
         CI: true
+    - uses: actions/upload-artifact@v1
+      with:
+        name: coverage
+        path: .nyc_output
   coverage:
     needs: test
     runs-on: ubuntu-latest
@@ -42,6 +46,10 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
     - run: npm ci
+    - uses: actions/download-artifact@v1
+      with:
+        name: coverage
+        path: .nyc_output
     - name: coverage
       run: |
         npm i -g coveralls
