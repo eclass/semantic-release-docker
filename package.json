@@ -62,7 +62,7 @@
     "mock-require": "3.0.3",
     "nyc": "15.0.0",
     "nyc-config-common": "1.0.1",
-    "prettier-standard": "16.1.0",
+    "prettier-standard": "16.2.1",
     "semantic-release": "17.0.4",
     "typescript": "3.8.3"
   },
