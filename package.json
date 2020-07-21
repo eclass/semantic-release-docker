@@ -1,6 +1,6 @@
 {
   "name": "@eclass/semantic-release-docker",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "semantic-release plugin to tag and push docker images",
   "main": "src/index.js",
   "scripts": {
