@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/eclass/semantic-release-docker/compare/v1.0.4...v1.0.5) (2020-08-21)
+
+
+### Bug Fixes
+
+* **deps:** update dependency aggregate-error to v3.1.0 ([2a6b36a](https://github.com/eclass/semantic-release-docker/commit/2a6b36a24f387126080719b9d0015c185d0246ee))
+
 ## [1.0.4](https://github.com/eclass/semantic-release-docker/compare/v1.0.3...v1.0.4) (2020-07-21)
 
 
