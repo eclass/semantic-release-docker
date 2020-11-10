@@ -4,8 +4,9 @@ cache:
     - ~/.npm
     - .nyc_output
 node_js:
-  - "v12.18.4"
-  - "v14.11.0"
+  - "v12.19.0"
+  - "v14.15.0"
+  - "v15.2.0"
 notifications:
   email: false
 stages:
