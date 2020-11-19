@@ -43,7 +43,7 @@
     "@types/dockerode": "3.2.1",
     "@types/mocha": "8.0.4",
     "@types/mock-require": "2.0.0",
-    "@types/node": "13.13.31",
+    "@types/node": "13.13.32",
     "@types/semantic-release": "17.2.0",
     "chai": "4.2.0",
     "eslint": "7.13.0",
