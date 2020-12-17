@@ -47,7 +47,8 @@ const pushImage = response => {
 module.exports = async (pluginConfig, ctx) => {
   try {
     const docker = new Dockerode()
-    const tags = ['latest', ctx.nextRelease.version]
+    const baseImageTag = pluginConfig.baseImageTag || 'latest'
+    const tags = [baseImageTag, ctx.nextRelease.version]
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
