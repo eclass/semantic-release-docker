@@ -11,11 +11,11 @@
 
 > [semantic-release](https://github.com/semantic-release/semantic-release) plugin to tag and push docker images
 
-| Step               | Description                                                                                 |
-|--------------------|---------------------------------------------------------------------------------------------|
+| Step               | Description                                                                            |
+| ------------------ | -------------------------------------------------------------------------------------- |
 | `verifyConditions` | Verify the presence of the `baseImageName`, and `registries` options in plugin config. |
-| `prepare`          | Tag docker images.                                                                   |
-| `publish`          | Push docker images.                                                                   |
+| `prepare`          | Tag docker images.                                                                     |
+| `publish`          | Push docker images.                                                                    |
 
 ## Install
 
@@ -43,25 +43,26 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 ### Options
 
-| Variable             | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `baseImageName` | Name of the previously constructed docker image. Required. |
-| `baseImageTag` | Name of the previously constructed docker image tag. Optional. Default `"latest"` |
-| `registries` | Array of objects with username, password, url and imageName. "username" and "password" are environment variables. Required. Example: `{"username": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"}` |
-| `additionalTags` | Array of addiotional tags to push. Optional. Example: `["beta", "next"]` |
+| Variable         | Description                                                                                                                                                                                                                                                                                 |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseImageName`  | Name of the previously constructed docker image. Required.                                                                                                                                                                                                                                  |
+| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"`                                                                                                                                                                                                           |
+| `registries`     | Array of objects with username, password, url and imageName. "username" and "password" are environment variables. Required. Example: `{"username": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"}` |
+| `additionalTags` | Array of addiotional tags to push. Optional. Example: `["beta", "next"]`                                                                                                                                                                                                                    |
 
 ### Environment variables
 
 Environment variables are variables. Depends of `registries` option.
 
-| Variable             | Description                                                       |
-| -------------------- | ----------------------------------------------------------------- |
-| `DOCKER_USER` | username for docker registry. |
+| Variable          | Description                   |
+| ----------------- | ----------------------------- |
+| `DOCKER_USER`     | username for docker registry. |
 | `DOCKER_PASSWORD` | password for docker registry. |
 
 ### Examples
 
 Push images to many docker registry
+
 ```json
 {
   "plugins": [
@@ -99,10 +100,7 @@ Push images to many docker registry
             "password": "AWS_DOCKER_PASSWORD"
           }
         ],
-        "additionalTags": [
-          "next",
-          "beta"
-        ]
+        "additionalTags": ["next", "beta"]
       }
     ]
   ]
@@ -129,7 +127,7 @@ cache:
   directories:
     - ~/.npm
 node_js:
-  - "12"
+  - '12'
 stages:
   - test
   - name: deploy
@@ -141,7 +139,6 @@ jobs:
     - stage: deploy
       before_script: docker build -t myapp .
       script: npx semantic-release
-
 ```
 
 ## License

@@ -24,7 +24,7 @@ export interface ExecOptions {
   host: string
   user: string
   port?: number
-  key?: string|Buffer
+  key?: string | Buffer
   fingerprint?: string
   password?: string
 }
