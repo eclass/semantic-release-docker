@@ -1,3 +1,10 @@
+## [1.0.6](https://github.com/eclass/semantic-release-docker/compare/v1.0.5...v1.0.6) (2020-12-17)
+
+
+### Bug Fixes
+
+* **docker:** allow set base image tag (default latest) ([ac6e42f](https://github.com/eclass/semantic-release-docker/commit/ac6e42f5d58c78a605dd1016e608a0e94f10186b)), closes [#66](https://github.com/eclass/semantic-release-docker/issues/66)
+
 ## [1.0.5](https://github.com/eclass/semantic-release-docker/compare/v1.0.4...v1.0.5) (2020-08-21)
 
 
