@@ -1,8 +1,13 @@
-import { Context as SemanticReleaseContext } from 'semantic-release'
-import { Config as SemanticReleaseConfig } from 'semantic-release'
+import {
+  Config as SemanticReleaseConfig,
+  Context as SemanticReleaseContext,
+  Result as SemanticReleaseResult
+} from 'semantic-release'
 
-export interface Context extends SemanticReleaseContext {
-  commits?: SemanticRelease.Commit[]
+export interface Context
+  extends SemanticReleaseContext,
+    SemanticReleaseConfig,
+    SemanticReleaseResult {
   message?: string
 }
 
@@ -13,11 +18,15 @@ export interface Registry {
   password?: string
 }
 
-export interface Config extends SemanticReleaseConfig {
+export interface Config {
   additionalTags?: string[]
   registries?: Registry[]
   baseImageName?: string
   baseImageTag?: string
+  dockerfile?: string
+  context?: string
+  buildArgs?: string[]
+  cacheFrom?: string
 }
 
 export interface ExecOptions {

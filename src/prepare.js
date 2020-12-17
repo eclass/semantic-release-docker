@@ -2,6 +2,7 @@ const AggregateError = require('aggregate-error')
 const Dockerode = require('dockerode')
 
 const getError = require('./get-error')
+const buildImage = require('./build')
 
 /**
  * @typedef {import('./types').Context} Context
@@ -16,13 +17,17 @@ const getError = require('./get-error')
  */
 module.exports = async (pluginConfig, ctx) => {
   try {
+    const baseImageTag = pluginConfig.baseImageTag || 'latest'
+    ctx.logger.log(
+      `Build docker image ${pluginConfig.baseImageName}:${baseImageTag}`
+    )
+    await buildImage(pluginConfig, ctx)
     const docker = new Dockerode()
     const image = docker.getImage(pluginConfig.baseImageName)
     const tags = [ctx.nextRelease.version]
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
-    const baseImageTag = pluginConfig.baseImageTag || 'latest'
     for (const tag of tags) {
       ctx.logger.log(
         `Tagging docker image ${pluginConfig.baseImageName}:${baseImageTag} to ${pluginConfig.baseImageName}:${tag}`

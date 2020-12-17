@@ -1,13 +1,18 @@
 /* eslint-disable require-jsdoc */
 const { describe, it, before, after } = require('mocha')
 const { expect } = require('chai')
+const { Readable } = require('stream')
 const mock = require('mock-require')
+const { WritableStreamBuffer } = require('stream-buffers')
 
 describe('Prepare', () => {
   const ctx = {
     env: { DOCKER_USER: 'user', DOCKER_PASSWORD: 'password' },
     nextRelease: { version: '1.0.0' },
-    logger: { log: () => ({}) }
+    logger: { log: () => ({}) },
+    cwd: process.cwd(),
+    stdout: new WritableStreamBuffer(),
+    stderr: new WritableStreamBuffer()
   }
   let prepare
   /** @type {import('../src/types').Config} */
@@ -39,7 +44,38 @@ describe('Prepare', () => {
         return new DockerImage()
       }
     }
+    const execaMock = () => {
+      const output =
+        'sha256:7ef3cc1955430d87d588ae7fcf84bcb077c8b470d13a183224497db8bf97528d'
+      let count = 0
+      const stdout = new Readable({
+        read (size) {
+          if (count === 1) {
+            this.push(null)
+          } else {
+            this.push(output)
+          }
+          count++
+        }
+      })
+      const stderr = new Readable({
+        read (size) {
+          this.push(null)
+        }
+      })
+      const promise = new Promise(resolve => {
+        setTimeout(() => {
+          resolve({ stdout: output })
+        }, 100)
+      })
+      // @ts-ignore
+      promise.stdout = stdout
+      // @ts-ignore
+      promise.stderr = stderr
+      return promise
+    }
     mock('dockerode', DockerMock)
+    mock('execa', execaMock)
     prepare = require('../src/prepare')
   })
 
@@ -56,6 +92,8 @@ describe('Prepare', () => {
   it('expect success prepare', async () => {
     pluginConfig.registries[0].imageName = 'registry.example.com/myapp'
     pluginConfig.additionalTags = ['beta']
+    ctx.stdout = new WritableStreamBuffer()
+    ctx.stderr = new WritableStreamBuffer()
     expect(await prepare(pluginConfig, ctx)).to.be.a('undefined')
   })
 
