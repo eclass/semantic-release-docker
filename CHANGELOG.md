@@ -1,3 +1,10 @@
+## [1.0.7](https://github.com/eclass/semantic-release-docker/compare/v1.0.6...v1.0.7) (2021-04-25)
+
+
+### Bug Fixes
+
+* **deps:** update dependency dockerode to v3.3.0 ([eaf64a1](https://github.com/eclass/semantic-release-docker/commit/eaf64a186756cc6867cf66e569e05ddee038e699))
+
 ## [1.0.6](https://github.com/eclass/semantic-release-docker/compare/v1.0.5...v1.0.6) (2020-12-17)
 
 
