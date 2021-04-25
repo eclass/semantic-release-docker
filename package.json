@@ -30,7 +30,7 @@
   "dependencies": {
     "@semantic-release/error": "^2.1.0",
     "aggregate-error": "3.1.0",
-    "dockerode": "3.2.1"
+    "dockerode": "3.3.0"
   },
   "devDependencies": {
     "@commitlint/cli": "12.1.1",
