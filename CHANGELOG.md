@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/eclass/semantic-release-docker/compare/v1.0.7...v1.1.0) (2021-08-17)
+
+
+### Features
+
+* **env:** add env DOCKER_BASE_IMAGE_TAG to set baseImageTag ([8843469](https://github.com/eclass/semantic-release-docker/commit/88434691d938f236bc540846a6b99ae6bd7ba195)), closes [#386](https://github.com/eclass/semantic-release-docker/issues/386)
+
 ## [1.0.7](https://github.com/eclass/semantic-release-docker/compare/v1.0.6...v1.0.7) (2021-04-25)
 
 
