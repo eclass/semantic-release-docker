@@ -54,10 +54,11 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 Environment variables are variables. Depends of `registries` option.
 
-| Variable          | Description                   |
-| ----------------- | ----------------------------- |
-| `DOCKER_USER`     | username for docker registry. |
-| `DOCKER_PASSWORD` | password for docker registry. |
+| Variable                | Description                   |
+| ----------------------- | ----------------------------- |
+| `DOCKER_USER`           | username for docker registry. |
+| `DOCKER_PASSWORD`       | password for docker registry. |
+| `DOCKER_BASE_IMAGE_TAG` | Name of the previously constructed docker image tag. Optional. Default `"latest"`. |
 
 ### Examples
 
