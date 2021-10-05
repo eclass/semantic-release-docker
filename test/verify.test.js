@@ -99,6 +99,19 @@ describe('Verify', () => {
     }
   })
 
+  it('expect a ESKIPTAGSNOTANARRAY error', async () => {
+    try {
+      pluginConfig.registries[0].skipTags = 'latest'
+      await verify(pluginConfig, { env })
+    } catch (errs) {
+      const err = errs._errors[0]
+      expect(err.name).to.equal('SemanticReleaseError')
+      expect(err.code).to.equal('ESKIPTAGSNOTANARRAY')
+    } finally {
+      pluginConfig.registries[0].skipTags = undefined
+    }
+  })
+
   it('expect success verify', async () => {
     env.DOCKER_USER = 'user'
     expect(await verify(pluginConfig, { env })).to.be.a('undefined')

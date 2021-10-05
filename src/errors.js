@@ -131,6 +131,17 @@ module.exports = new Map([
       message: 'Error tag docker push.',
       details: 'Error tag docker push. Check credentials in `registries`.'
     })
+  ],
+  [
+    'ESKIPTAGSNOTANARRAY',
+    /**
+     * @param {Context} ctx -
+     * @returns {SemanticReleaseError} -
+     */
+    ctx => ({
+      message: 'Invalid registry config.',
+      details: 'Invalid registry config. 1 or more `registry` config contains the `skipTags` property but it is not an array. Please check it.'
+    })
   ]
 ])
 /* eslint-enable sonarjs/no-duplicate-string */

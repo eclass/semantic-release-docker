@@ -3,6 +3,7 @@ const Dockerode = require('dockerode')
 
 const getError = require('./get-error')
 const getAuth = require('./getAuth')
+const isTagPushAllowed = require('./is-tag-push-allowed')
 
 /** @typedef {import('stream').Readable} ReadableStream */
 /**
@@ -67,10 +68,14 @@ module.exports = async (pluginConfig, ctx) => {
         username: user
       }
       for (const tag of tags) {
-        ctx.logger.log(`Pushing docker image ${imageName}:${tag}`)
-        const response = await image.push({ tag, ...options })
-        // @ts-ignore
-        await pushImage(response)
+        if (isTagPushAllowed(tag, registry)) {
+          ctx.logger.log(`Pushing docker image ${imageName}:${tag}`)
+          const response = await image.push({ tag, ...options })
+          // @ts-ignore
+          await pushImage(response)
+        } else {
+          ctx.logger.log(`Skip push docker image ${imageName}:${tag}`)
+        }
       }
     }
   } catch (err) {

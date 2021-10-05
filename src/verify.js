@@ -24,7 +24,11 @@ module.exports = async (pluginConfig, ctx) => {
   if (!pluginConfig.registries || pluginConfig.registries.length === 0) {
     errors.push(getError('ENOREGISTRY', ctx))
   } else {
-    for (const { user, password, url, imageName } of pluginConfig.registries) {
+    for (const { user, password, url, imageName, skipTags } of pluginConfig.registries) {
+      if (skipTags && !Array.isArray(skipTags)) {
+        errors.push(getError('ESKIPTAGSNOTANARRAY', ctx))
+      }
+
       try {
         getAuth(user, password, url, imageName, ctx)
         // eslint-disable-next-line security/detect-object-injection

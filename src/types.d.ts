@@ -11,6 +11,7 @@ export interface Registry {
   imageName?: string
   user?: string
   password?: string
+  skipTags?: string[];
 }
 
 export interface Config extends SemanticReleaseConfig {
