@@ -30,7 +30,7 @@
   "dependencies": {
     "@semantic-release/error": "^2.1.0",
     "aggregate-error": "3.1.0",
-    "dockerode": "3.3.0"
+    "dockerode": "3.3.1"
   },
   "devDependencies": {
     "@commitlint/cli": "13.2.1",
@@ -40,7 +40,7 @@
     "@semantic-release/changelog": "5.0.1",
     "@semantic-release/git": "9.0.1",
     "@types/chai": "4.2.22",
-    "@types/dockerode": "3.2.7",
+    "@types/dockerode": "3.3.0",
     "@types/mocha": "9.0.0",
     "@types/mock-require": "2.0.0",
     "@types/node": "14.17.27",
