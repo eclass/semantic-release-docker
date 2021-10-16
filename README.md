@@ -43,12 +43,24 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 ### Options
 
-| Variable         | Description                                                                                                                                                                                                                                                                                 |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseImageName`  | Name of the previously constructed docker image. Required.                                                                                                                                                                                                                                  |
-| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"`                                                                                                                                                                                                           |
-| `registries`     | Array of objects with username, password, url and imageName. "user" and "password" are environment variables. Required. Example: `{"user": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"}` |
-| `additionalTags` | Array of addiotional tags to push. Optional. Example: `["beta", "next"]`                                                                                                                                                                                                                    |
+#### Config
+
+| Variable         | Description |
+| ---------------- | ----------- |
+| `baseImageName`  | Name of the previously constructed docker image. Required. |
+| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"` |
+| `registries`     | Array of [Registry](#registry) objects. Required. Example: {"user": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"} |
+| `additionalTags` | Array of additional tags to push. Optional. Example: `["beta", "next"]` |
+
+#### Registry
+
+| Variable         | Description |
+| ---------------- | ----------- |
+| url              | Url of the docker registry. Required. Example: `"docker.pkg.github.com"` |
+| imageName        | Name of the docker image. Required. Example: `"docker.pkg.github.com/myuser/myrepo/myapp"` |
+| user             | Name of the environment variable used as user name for login to the docker registry. Required. Example: `"DOCKER_USER"` |
+| password         | Name of the environment variable used as password for login to the docker registry. Required. Example: `"DOCKER_PASSWORD"` |
+| skipTags         | Array of image tags that should not be pushed to the docker registry. Optional. Example: `["latest"]` |
 
 ### Environment variables
 
@@ -98,7 +110,8 @@ Push images to many docker registry
             "url": "123456789012.dkr.ecr.us-east-1.amazonaws.com",
             "imageName": "123456789012.dkr.ecr.us-east-1.amazonaws.com/myapp",
             "user": "AWS_DOCKER_USER",
-            "password": "AWS_DOCKER_PASSWORD"
+            "password": "AWS_DOCKER_PASSWORD",
+            "skipTags": ["latest"]
           }
         ],
         "additionalTags": ["next", "beta"]
