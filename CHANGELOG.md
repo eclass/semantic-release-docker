@@ -1,3 +1,10 @@
+# [1.2.0](https://github.com/eclass/semantic-release-docker/compare/v1.1.0...v1.2.0) (2021-10-18)
+
+
+### Features
+
+* skipTags registry option ([bf52afc](https://github.com/eclass/semantic-release-docker/commit/bf52afcd29f5714ac8ba46d11e0f8cec151d9d5d))
+
 # [1.1.0](https://github.com/eclass/semantic-release-docker/compare/v1.0.7...v1.1.0) (2021-08-17)
 
 
