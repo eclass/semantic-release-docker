@@ -25,10 +25,13 @@ describe('Publish', () => {
       }
     ]
   }
+  let dockerPushArgs
 
   before(() => {
     class DockerImage {
       push ({ tag, password, serveraddress, username }) {
+        dockerPushArgs.push({ tag, password, serveraddress, username })
+
         return new Promise((resolve, reject) => {
           const response = new MyEmitter()
           setTimeout(() => {
@@ -53,6 +56,11 @@ describe('Publish', () => {
     publish = require('../src/publish')
   })
 
+  // eslint-disable-next-line no-undef
+  beforeEach(() => {
+    dockerPushArgs = []
+  })
+
   it('expect a EDOCKERIMAGEPUSH error', async () => {
     try {
       await publish(pluginConfig, ctx)
@@ -67,10 +75,26 @@ describe('Publish', () => {
     pluginConfig.registries[0].url = 'registry.example.com'
     pluginConfig.additionalTags = ['beta']
     expect(await publish(pluginConfig, ctx)).to.be.a('undefined')
+    // eslint-disable-next-line no-unused-expressions
+    expect(isTagPublished('latest')).to.be.true
+    // eslint-disable-next-line no-unused-expressions
+    expect(isTagPublished('beta')).to.be.true
+  })
+
+  it('expect skip "latest" publish', async () => {
+    pluginConfig.registries[0].url = 'registry.example.com'
+    pluginConfig.registries[0].skipTags = ['latest']
+    expect(await publish(pluginConfig, ctx)).to.be.a('undefined')
+    // eslint-disable-next-line no-unused-expressions
+    expect(isTagPublished('latest')).to.be.false
   })
 
   after(() => {
     mock.stopAll()
   })
+
+  const isTagPublished = (tag) => {
+    return dockerPushArgs.some(arg => arg.tag === tag)
+  }
 })
 /* eslint-enable require-jsdoc */
