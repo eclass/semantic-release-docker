@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/eclass/semantic-release-docker#readme",
   "dependencies": {
-    "@semantic-release/error": "^2.1.0",
+    "@semantic-release/error": "^3.0.0",
     "aggregate-error": "3.1.0",
     "dockerode": "3.3.1"
   },
@@ -37,8 +37,8 @@
     "@commitlint/config-conventional": "13.2.0",
     "@eclass/eslint-config": "2.0.1",
     "@eclass/semantic-release-npm-github-config": "3.0.1",
-    "@semantic-release/changelog": "5.0.1",
-    "@semantic-release/git": "9.0.1",
+    "@semantic-release/changelog": "6.0.1",
+    "@semantic-release/git": "10.0.1",
     "@types/chai": "4.2.22",
     "@types/dockerode": "3.3.0",
     "@types/mocha": "9.0.0",
