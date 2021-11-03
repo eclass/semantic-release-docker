@@ -1,4 +1,3 @@
 {
-  "automerge": "minor",
-  "extends": ["config:js-lib"]
+  "extends": ["github>eclass/renovate-config:semantic-release-plugins-commonjs"]
 }
