@@ -1,3 +1,21 @@
+# [2.0.0](https://github.com/eclass/semantic-release-docker/compare/v1.2.0...v2.0.0) (2021-11-03)
+
+
+### Bug Fixes
+
+* **deps:** set min node version to 14.17.0 ([5bc476d](https://github.com/eclass/semantic-release-docker/commit/5bc476d744d31260416fea9e10f4f3b95d0590e5))
+* **deps:** update dependency dockerode to v3.3.1 ([27c4781](https://github.com/eclass/semantic-release-docker/commit/27c4781f2eccc42e80a5239e7c5a2ada83870700))
+
+
+### Features
+
+* support semantic-release 18 ([25c45a8](https://github.com/eclass/semantic-release-docker/commit/25c45a8333a80c46165a42f855d60a3b4172214e))
+
+
+### BREAKING CHANGES
+
+* **deps:** set min node version to 14.17.0
+
 # [1.2.0](https://github.com/eclass/semantic-release-docker/compare/v1.1.0...v1.2.0) (2021-10-18)
 
 
