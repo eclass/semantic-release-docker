@@ -44,7 +44,7 @@
     "@types/mocha": "9.0.0",
     "@types/mock-require": "2.0.0",
     "@types/node": "16.11.6",
-    "@types/semantic-release": "17.2.2",
+    "@types/semantic-release": "17.2.3",
     "chai": "4.3.4",
     "eslint": "8.6.0",
     "eslint-plugin-array-func": "3.1.7",
