@@ -20,7 +20,11 @@ jobs:
             ${{ runner.os }}-
       - run: npm ci
       - name: eslint
-        run: npx eslint .
+        run: npm run lint:check
+      - name: prettier
+        run: npm run format:check
+      - name: ts-compile-check
+        run: npm run ts-compile-check
       - name: test
         run: npm test
         env:
