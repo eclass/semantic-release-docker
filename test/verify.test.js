@@ -101,7 +101,8 @@ describe('Verify', () => {
 
   it('expect a ESKIPTAGSNOTANARRAY error', async () => {
     try {
-      pluginConfig.registries[0].skipTags = ['latest']
+      // @ts-ignore
+      pluginConfig.registries[0].skipTags = 'latest'
       await verify(pluginConfig, { env })
     } catch (errs) {
       const err = errs._errors[0]
