@@ -11,7 +11,7 @@ describe('Verify', () => {
 
   before(() => {
     class DockerMock {
-      checkAuth ({ password, serveraddress, username }) {
+      checkAuth({ password, serveraddress, username }) {
         return new Promise((resolve, reject) => {
           if (username === 'error') {
             return reject(new Error('invalid login'))
@@ -52,8 +52,8 @@ describe('Verify', () => {
           user: 'DOCKER_USER',
           password: 'DOCKER_PASSWORD',
           url: 'registry.example.com',
-          imageName: 'registry.example.com/myapp'
-        }
+          imageName: 'registry.example.com/myapp',
+        },
       ]
       await verify(pluginConfig, { env })
     } catch (errs) {
@@ -101,7 +101,7 @@ describe('Verify', () => {
 
   it('expect a ESKIPTAGSNOTANARRAY error', async () => {
     try {
-      pluginConfig.registries[0].skipTags = 'latest'
+      pluginConfig.registries[0].skipTags = ['latest']
       await verify(pluginConfig, { env })
     } catch (errs) {
       const err = errs._errors[0]

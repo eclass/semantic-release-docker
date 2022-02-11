@@ -1,10 +1,10 @@
 const Dockerode = require('dockerode')
 
 /**
- * @param {string} username -
- * @param {string} password -
- * @param {string} serveraddress -
- * @returns {Promise<*>} -
+ * @param {string} username -.
+ * @param {string} password -.
+ * @param {string} serveraddress -.
+ * @returns {Promise<*>} -.
  * @example
  * const valid = await login(user, pass, registryUrl)
  */

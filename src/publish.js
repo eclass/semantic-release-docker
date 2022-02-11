@@ -7,15 +7,15 @@ const isTagPushAllowed = require('./is-tag-push-allowed')
 
 /** @typedef {import('stream').Readable} ReadableStream */
 /**
- * @param {ReadableStream} response -
- * @returns {Promise<void>} -
+ * @param {ReadableStream} response -.
+ * @returns {Promise<void>} -.
  * @example
  * pushImage(response)
  */
-const pushImage = response => {
+const pushImage = (response) => {
   return new Promise((resolve, reject) => {
     let error
-    response.on('data', chunk => {
+    response.on('data', (chunk) => {
       const data = JSON.parse(chunk.toString())
       if (data.error) {
         error = new Error(data.error)
@@ -28,7 +28,7 @@ const pushImage = response => {
         resolve()
       }
     })
-    response.on('error', error => {
+    response.on('error', (error) => {
       reject(error)
     })
   })
@@ -39,16 +39,17 @@ const pushImage = response => {
  * @typedef {import('./types').Config} Config
  */
 /**
- * @param {Config} pluginConfig -
- * @param {Context} ctx -
- * @returns {Promise<*>} -
+ * @param {Config} pluginConfig -.
+ * @param {Context} ctx -.
+ * @returns {Promise<*>} -.
  * @example
  * verifyConditions(pluginConfig, ctx)
  */
 module.exports = async (pluginConfig, ctx) => {
   try {
     const docker = new Dockerode()
-    const baseImageTag = ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
+    const baseImageTag =
+      ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
     const tags = [baseImageTag, ctx.nextRelease.version]
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
@@ -59,13 +60,13 @@ module.exports = async (pluginConfig, ctx) => {
         registry.password,
         registry.url,
         registry.imageName,
-        ctx
+        ctx,
       )
       const image = docker.getImage(imageName)
       const options = {
-        password: password,
+        password,
         serveraddress: url,
-        username: user
+        username: user,
       }
       for (const tag of tags) {
         if (isTagPushAllowed(tag, registry)) {

@@ -7,7 +7,7 @@ describe('Prepare', () => {
   const ctx = {
     env: { DOCKER_USER: 'user', DOCKER_PASSWORD: 'password' },
     nextRelease: { version: '1.0.0' },
-    logger: { log: () => ({}) }
+    logger: { log: () => ({}) },
   }
   let prepare
   /** @type {import('../src/types').Config} */
@@ -18,14 +18,14 @@ describe('Prepare', () => {
         user: 'DOCKER_USER',
         password: 'DOCKER_PASSWORD',
         url: 'registry.example.com',
-        imageName: 'registry.example.com/error'
-      }
-    ]
+        imageName: 'registry.example.com/error',
+      },
+    ],
   }
 
   before(() => {
     class DockerImage {
-      tag ({ repo, tag }) {
+      tag({ repo, tag }) {
         return new Promise((resolve, reject) => {
           if (/error/.test(repo)) {
             return reject(new Error('invalid image'))
@@ -35,7 +35,7 @@ describe('Prepare', () => {
       }
     }
     class DockerMock {
-      getImage (imageName) {
+      getImage(imageName) {
         return new DockerImage()
       }
     }

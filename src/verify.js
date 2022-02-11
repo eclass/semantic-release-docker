@@ -10,9 +10,9 @@ const getAuth = require('./getAuth')
  * @typedef {import('./types').Config} Config
  */
 /**
- * @param {Config} pluginConfig -
- * @param {Context} ctx -
- * @returns {Promise<void>} -
+ * @param {Config} pluginConfig -.
+ * @param {Context} ctx -.
+ * @returns {Promise<void>} -.
  * @example
  * verifyConditions(pluginConfig, ctx)
  */
@@ -24,7 +24,13 @@ module.exports = async (pluginConfig, ctx) => {
   if (!pluginConfig.registries || pluginConfig.registries.length === 0) {
     errors.push(getError('ENOREGISTRY', ctx))
   } else {
-    for (const { user, password, url, imageName, skipTags } of pluginConfig.registries) {
+    for (const {
+      user,
+      password,
+      url,
+      imageName,
+      skipTags,
+    } of pluginConfig.registries) {
       if (skipTags && !Array.isArray(skipTags)) {
         errors.push(getError('ESKIPTAGSNOTANARRAY', ctx))
       }

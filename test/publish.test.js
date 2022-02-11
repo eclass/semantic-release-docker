@@ -10,7 +10,7 @@ describe('Publish', () => {
   const ctx = {
     env: { DOCKER_USER: 'user', DOCKER_PASSWORD: 'password' },
     nextRelease: { version: '1.0.0' },
-    logger: { log: () => ({}) }
+    logger: { log: () => ({}) },
   }
   let publish
   /** @type {import('../src/types').Config} */
@@ -21,15 +21,15 @@ describe('Publish', () => {
         user: 'DOCKER_USER',
         password: 'DOCKER_PASSWORD',
         url: 'registry.error.com',
-        imageName: 'registry.example.com/myapp'
-      }
-    ]
+        imageName: 'registry.example.com/myapp',
+      },
+    ],
   }
   let dockerPushArgs
 
   before(() => {
     class DockerImage {
-      push ({ tag, password, serveraddress, username }) {
+      push({ tag, password, serveraddress, username }) {
         dockerPushArgs.push({ tag, password, serveraddress, username })
 
         return new Promise((resolve, reject) => {
@@ -48,7 +48,7 @@ describe('Publish', () => {
       }
     }
     class DockerMock {
-      getImage (imageName) {
+      getImage(imageName) {
         return new DockerImage()
       }
     }
@@ -94,7 +94,7 @@ describe('Publish', () => {
   })
 
   const isTagPublished = (tag) => {
-    return dockerPushArgs.some(arg => arg.tag === tag)
+    return dockerPushArgs.some((arg) => arg.tag === tag)
   }
 })
 /* eslint-enable require-jsdoc */

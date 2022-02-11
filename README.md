@@ -45,31 +45,31 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 #### Config
 
-| Variable         | Description |
-| ---------------- | ----------- |
-| `baseImageName`  | Name of the previously constructed docker image. Required. |
-| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"` |
+| Variable         | Description                                                                                                                                                                                                 |
+| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseImageName`  | Name of the previously constructed docker image. Required.                                                                                                                                                  |
+| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"`                                                                                                                           |
 | `registries`     | Array of [Registry](#registry) objects. Required. Example: {"user": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"} |
-| `additionalTags` | Array of additional tags to push. Optional. Example: `["beta", "next"]` |
+| `additionalTags` | Array of additional tags to push. Optional. Example: `["beta", "next"]`                                                                                                                                     |
 
 #### Registry
 
-| Variable         | Description |
-| ---------------- | ----------- |
-| url              | Url of the docker registry. Required. Example: `"docker.pkg.github.com"` |
-| imageName        | Name of the docker image. Required. Example: `"docker.pkg.github.com/myuser/myrepo/myapp"` |
-| user             | Name of the environment variable used as user name for login to the docker registry. Required. Example: `"DOCKER_USER"` |
-| password         | Name of the environment variable used as password for login to the docker registry. Required. Example: `"DOCKER_PASSWORD"` |
-| skipTags         | Array of image tags that should not be pushed to the docker registry. Optional. Example: `["latest"]` |
+| Variable  | Description                                                                                                                |
+| --------- | -------------------------------------------------------------------------------------------------------------------------- |
+| url       | Url of the docker registry. Required. Example: `"docker.pkg.github.com"`                                                   |
+| imageName | Name of the docker image. Required. Example: `"docker.pkg.github.com/myuser/myrepo/myapp"`                                 |
+| user      | Name of the environment variable used as user name for login to the docker registry. Required. Example: `"DOCKER_USER"`    |
+| password  | Name of the environment variable used as password for login to the docker registry. Required. Example: `"DOCKER_PASSWORD"` |
+| skipTags  | Array of image tags that should not be pushed to the docker registry. Optional. Example: `["latest"]`                      |
 
 ### Environment variables
 
 Environment variables are variables. Depends of `registries` option.
 
-| Variable                | Description                   |
-| ----------------------- | ----------------------------- |
-| `DOCKER_USER`           | username for docker registry. |
-| `DOCKER_PASSWORD`       | password for docker registry. |
+| Variable                | Description                                                                        |
+| ----------------------- | ---------------------------------------------------------------------------------- |
+| `DOCKER_USER`           | username for docker registry.                                                      |
+| `DOCKER_PASSWORD`       | password for docker registry.                                                      |
 | `DOCKER_BASE_IMAGE_TAG` | Name of the previously constructed docker image tag. Optional. Default `"latest"`. |
 
 ### Examples

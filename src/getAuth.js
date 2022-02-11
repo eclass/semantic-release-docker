@@ -9,12 +9,12 @@ const getError = require('./get-error')
  * @typedef {import('./types').Registry} Registry
  */
 /**
- * @param {string} user -
- * @param {string} password -
- * @param {string} registry -
- * @param {string} imageName -
- * @param {Context} ctx -
- * @returns {Registry} -
+ * @param {string} user -.
+ * @param {string} password -.
+ * @param {string} registry -.
+ * @param {string} imageName -.
+ * @param {Context} ctx -.
+ * @returns {Registry} -.
  * @example
  * verifyConditions(pluginConfig, ctx)
  */

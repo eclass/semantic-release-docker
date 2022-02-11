@@ -2,9 +2,9 @@
  * @typedef {import('./types').Registry} Registry
  */
 /**
- * @param {string } tag -
- * @param {Registry} registry -
- * @returns {boolean} -
+ * @param {string } tag -.
+ * @param {Registry} registry -.
+ * @returns {boolean} -.
  * @example
  * isTagPushAllowed(tag, registry)
  */
