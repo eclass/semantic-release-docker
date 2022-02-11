@@ -8,6 +8,7 @@ jobs:
     strategy:
       matrix:
         node: ['14.19.0', '16.14.0', '17.4.0']
+    name: Node ${{ matrix.node }} testing
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
