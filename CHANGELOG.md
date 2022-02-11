@@ -1,3 +1,16 @@
+# [3.0.0](https://github.com/eclass/semantic-release-docker/compare/v2.0.0...v3.0.0) (2022-02-11)
+
+
+### Bug Fixes
+
+* **deps:** allow updates in aggregate-error and dockerode ([7a7495e](https://github.com/eclass/semantic-release-docker/commit/7a7495e50f837a4fc77a429809f37688bc10eb8a))
+* **deps:** set peerDependencies  semantic-release to >=18.0.0 ([2a2a53e](https://github.com/eclass/semantic-release-docker/commit/2a2a53e0504929a2b6c5062113b78ba23776bfad))
+
+
+### BREAKING CHANGES
+
+* **deps:** Now min version of semantic-release is 18.0.0
+
 # [2.0.0](https://github.com/eclass/semantic-release-docker/compare/v1.2.0...v2.0.0) (2021-11-03)
 
 ### Bug Fixes
