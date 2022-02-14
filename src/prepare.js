@@ -1,5 +1,6 @@
 const AggregateError = require('aggregate-error')
 const Dockerode = require('dockerode')
+const { template } = require('lodash')
 
 const getError = require('./get-error')
 
@@ -24,7 +25,8 @@ module.exports = async (pluginConfig, ctx) => {
     }
     const baseImageTag =
       ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
-    for (const tag of tags) {
+    for (let tag of tags) {
+      tag = template(tag)(ctx)
       ctx.logger.log(
         `Tagging docker image ${pluginConfig.baseImageName}:${baseImageTag} to ${pluginConfig.baseImageName}:${tag}`,
       )

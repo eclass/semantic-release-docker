@@ -1,5 +1,6 @@
 const AggregateError = require('aggregate-error')
 const Dockerode = require('dockerode')
+const { template } = require('lodash')
 
 const getError = require('./get-error')
 const getAuth = require('./getAuth')
@@ -68,7 +69,8 @@ module.exports = async (pluginConfig, ctx) => {
         serveraddress: url,
         username: user,
       }
-      for (const tag of tags) {
+      for (let tag of tags) {
+        tag = template(tag)(ctx)
         if (isTagPushAllowed(tag, registry)) {
           ctx.logger.log(`Pushing docker image ${imageName}:${tag}`)
           const response = await image.push({ tag, ...options })
