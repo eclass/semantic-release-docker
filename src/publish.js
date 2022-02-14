@@ -1,5 +1,6 @@
 const AggregateError = require('aggregate-error')
 const Dockerode = require('dockerode')
+const { template, uniq } = require('lodash')
 
 const getError = require('./get-error')
 const getAuth = require('./getAuth')
@@ -50,10 +51,14 @@ module.exports = async (pluginConfig, ctx) => {
     const docker = new Dockerode()
     const baseImageTag =
       ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
-    const tags = [baseImageTag, ctx.nextRelease.version]
+    let tags = [ctx.nextRelease.version]
+    if (!ctx.nextRelease.channel) {
+      tags.push(baseImageTag)
+    }
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
+    tags = uniq(tags.map((tag) => template(tag)(ctx)).filter((tag) => tag))
     for (const registry of pluginConfig.registries) {
       const { user, password, url, imageName } = getAuth(
         registry.user,

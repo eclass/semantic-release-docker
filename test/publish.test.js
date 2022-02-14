@@ -73,12 +73,15 @@ describe('Publish', () => {
 
   it('expect success publish', async () => {
     pluginConfig.registries[0].url = 'registry.example.com'
-    pluginConfig.additionalTags = ['beta']
+    // eslint-disable-next-line no-template-curly-in-string
+    pluginConfig.additionalTags = ['beta', 'beta-${nextRelease.version}']
     expect(await publish(pluginConfig, ctx)).to.be.a('undefined')
     // eslint-disable-next-line no-unused-expressions
     expect(isTagPublished('latest')).to.be.true
     // eslint-disable-next-line no-unused-expressions
     expect(isTagPublished('beta')).to.be.true
+    // eslint-disable-next-line no-unused-expressions
+    expect(isTagPublished('beta-1.0.0')).to.be.true
   })
 
   it('expect skip "latest" publish', async () => {
