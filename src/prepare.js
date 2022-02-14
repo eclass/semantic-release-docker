@@ -25,17 +25,21 @@ module.exports = async (pluginConfig, ctx) => {
     }
     const baseImageTag =
       ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
+    if (!ctx.nextRelease.channel) {
+      tags.push(baseImageTag)
+    }
     for (let tag of tags) {
       tag = template(tag)(ctx)
       ctx.logger.log(
-        `Tagging docker image ${pluginConfig.baseImageName}:${baseImageTag} to ${pluginConfig.baseImageName}:${tag}`,
+        `Tagging docker image ${pluginConfig.baseImageName} to ${pluginConfig.baseImageName}:${tag}`,
       )
       await image.tag({ repo: pluginConfig.baseImageName, tag })
     }
     for (const { imageName } of pluginConfig.registries) {
-      for (const tag of [...tags, baseImageTag]) {
+      for (let tag of tags) {
+        tag = template(tag)(ctx)
         ctx.logger.log(
-          `Tagging docker image ${pluginConfig.baseImageName}:${baseImageTag} to ${imageName}:${tag}`,
+          `Tagging docker image ${pluginConfig.baseImageName} to ${imageName}:${tag}`,
         )
         await image.tag({ repo: imageName, tag })
       }

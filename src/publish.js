@@ -51,7 +51,10 @@ module.exports = async (pluginConfig, ctx) => {
     const docker = new Dockerode()
     const baseImageTag =
       ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
-    const tags = [baseImageTag, ctx.nextRelease.version]
+    const tags = [ctx.nextRelease.version]
+    if (!ctx.nextRelease.channel) {
+      tags.push(baseImageTag)
+    }
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
