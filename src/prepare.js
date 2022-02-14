@@ -28,7 +28,7 @@ module.exports = async (pluginConfig, ctx) => {
     if (!ctx.nextRelease.channel) {
       tags.push(baseImageTag)
     }
-    tags = uniq(tags).map((tag) => template(tag)(ctx))
+    tags = uniq(tags.map((tag) => template(tag)(ctx)).filter((tag) => tag))
     for (const tag of tags) {
       ctx.logger.log(
         `Tagging docker image ${pluginConfig.baseImageName} to ${pluginConfig.baseImageName}:${tag}`,

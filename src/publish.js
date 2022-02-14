@@ -58,7 +58,7 @@ module.exports = async (pluginConfig, ctx) => {
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
-    tags = uniq(tags).map((tag) => template(tag)(ctx))
+    tags = uniq(tags.map((tag) => template(tag)(ctx)).filter((tag) => tag))
     for (const registry of pluginConfig.registries) {
       const { user, password, url, imageName } = getAuth(
         registry.user,
