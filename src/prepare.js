@@ -39,6 +39,7 @@ module.exports = async (pluginConfig, ctx) => {
       }
     }
   } catch (err) {
+    ctx.logger.error('failed to tag image, ', err)
     throw new AggregateError([getError('EDOCKERIMAGETAG', ctx)])
   }
 }
