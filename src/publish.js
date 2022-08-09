@@ -80,6 +80,7 @@ module.exports = async (pluginConfig, ctx) => {
       }
     }
   } catch (err) {
+    ctx.logger.error(err)
     throw new AggregateError([getError('EDOCKERIMAGEPUSH', ctx)])
   }
 }
