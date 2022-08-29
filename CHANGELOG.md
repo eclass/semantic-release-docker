@@ -1,3 +1,11 @@
+## [3.0.1](https://github.com/eclass/semantic-release-docker/compare/v3.0.0...v3.0.1) (2022-08-29)
+
+
+### Bug Fixes
+
+* add error log to publish step ([ff54932](https://github.com/eclass/semantic-release-docker/commit/ff54932e9761fc98284c5ef54f70b5328f5a08f1))
+* add error logging to tag ([ab4e5d8](https://github.com/eclass/semantic-release-docker/commit/ab4e5d8166fa01284a13ef8c87b1eccd8a9e8a89))
+
 # [3.0.0](https://github.com/eclass/semantic-release-docker/compare/v2.0.0...v3.0.0) (2022-02-11)
 
 
