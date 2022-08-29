@@ -10,7 +10,7 @@ describe('Publish', () => {
   const ctx = {
     env: { DOCKER_USER: 'user', DOCKER_PASSWORD: 'password' },
     nextRelease: { version: '1.0.0' },
-    logger: { log: () => ({}) },
+    logger: { log: () => ({}), error: () => ({}) },
   }
   let publish
   /** @type {import('../src/types').Config} */
