@@ -25,6 +25,7 @@ const createContext = () => ({
     gitTag: 'v1.0.0',
     notes: 'Release notes for version 1.1.0...',
   },
+  // @ts-ignore
   logger: { log: () => ({}), error: () => ({}) },
 })
 
