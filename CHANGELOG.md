@@ -1,3 +1,15 @@
+# [4.0.0](https://github.com/eclass/semantic-release-docker/compare/v3.0.1...v4.0.0) (2023-03-22)
+
+
+### Features
+
+* use channel or latest as release image tag ([8469ec0](https://github.com/eclass/semantic-release-docker/commit/8469ec05aa51e1726bd11a05e7f4466a4769478a)), closes [#481](https://github.com/eclass/semantic-release-docker/issues/481)
+
+
+### BREAKING CHANGES
+
+* now use default image tag as branch channel name or latest
+
 ## [3.0.1](https://github.com/eclass/semantic-release-docker/compare/v3.0.0...v3.0.1) (2022-08-29)
 
 
