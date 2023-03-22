@@ -19,6 +19,11 @@ module.exports = async (pluginConfig, ctx) => {
     const docker = new Dockerode()
     const image = docker.getImage(pluginConfig.baseImageName)
     const tags = [ctx.nextRelease.version]
+    const channel = ctx.nextRelease.channel || 'latest'
+    const releaseImageTag =
+      ctx.env.DOCKER_RELEASE_IMAGE_TAG ||
+      pluginConfig.releaseImageTag ||
+      channel
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }
@@ -31,7 +36,7 @@ module.exports = async (pluginConfig, ctx) => {
       await image.tag({ repo: pluginConfig.baseImageName, tag })
     }
     for (const { imageName } of pluginConfig.registries) {
-      for (const tag of [...tags, baseImageTag]) {
+      for (const tag of [...tags, releaseImageTag]) {
         ctx.logger.log(
           `Tagging docker image ${pluginConfig.baseImageName}:${baseImageTag} to ${imageName}:${tag}`,
         )

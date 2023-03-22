@@ -19,6 +19,7 @@ export interface Config extends SemanticReleaseConfig {
   registries?: Registry[]
   baseImageName?: string
   baseImageTag?: string
+  releaseImageTag?: string
 }
 
 export interface ExecOptions {

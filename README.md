@@ -44,12 +44,13 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 #### Config
 
-| Variable         | Description                                                                                                                                                                                                 |
-| ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `baseImageName`  | Name of the previously constructed docker image. Required.                                                                                                                                                  |
-| `baseImageTag`   | Name of the previously constructed docker image tag. Optional. Default `"latest"`                                                                                                                           |
-| `registries`     | Array of [Registry](#registry) objects. Required. Example: {"user": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"} |
-| `additionalTags` | Array of additional tags to push. Optional. Example: `["beta", "next"]`                                                                                                                                     |
+| Variable          | Description                                                                                                                                                                                                 |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `baseImageName`   | Name of the previously constructed docker image. Required.                                                                                                                                                  |
+| `baseImageTag`    | Name of the previously constructed docker image tag. Optional. Default `"latest"`                                                                                                                           |
+| `releaseImageTag` | Name of the docker image tag for new. Optional. Default `"latest"` or `channel` if use a custom branches or prerelase                                                                                       |
+| `registries`      | Array of [Registry](#registry) objects. Required. Example: {"user": "DOCKER_USER", "password": "DOCKER_PASSWORD", "url": "docker.pkg.github.com", "imageName": "docker.pkg.github.com/myuser/myrepo/myapp"} |
+| `additionalTags`  | Array of additional tags to push. Optional. Example: `["beta", "next"]`                                                                                                                                     |
 
 #### Registry
 
@@ -65,11 +66,12 @@ The plugin can be configured in the [**semantic-release** configuration file](ht
 
 Environment variables are variables. Depends of `registries` option.
 
-| Variable                | Description                                                                        |
-| ----------------------- | ---------------------------------------------------------------------------------- |
-| `DOCKER_USER`           | username for docker registry.                                                      |
-| `DOCKER_PASSWORD`       | password for docker registry.                                                      |
-| `DOCKER_BASE_IMAGE_TAG` | Name of the previously constructed docker image tag. Optional. Default `"latest"`. |
+| Variable                   | Description                                                                                                                   |
+| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| `DOCKER_USER`              | username for docker registry.                                                                                                 |
+| `DOCKER_PASSWORD`          | password for docker registry.                                                                                                 |
+| `DOCKER_BASE_IMAGE_TAG`    | Name of the previously constructed docker image tag. Optional. Default `"latest"`.                                            |
+| `DOCKER_RELEASE_IMAGE_TAG` | Name of the docker image tag for new release. Optional. Default `"latest"` or `channel` if use a custom branches or prerelase |
 
 ### Examples
 

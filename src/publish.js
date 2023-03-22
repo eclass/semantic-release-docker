@@ -48,9 +48,12 @@ const pushImage = (response) => {
 module.exports = async (pluginConfig, ctx) => {
   try {
     const docker = new Dockerode()
-    const baseImageTag =
-      ctx.env.DOCKER_BASE_IMAGE_TAG || pluginConfig.baseImageTag || 'latest'
-    const tags = [baseImageTag, ctx.nextRelease.version]
+    const channel = ctx.nextRelease.channel || 'latest'
+    const releaseImageTag =
+      ctx.env.DOCKER_RELEASE_IMAGE_TAG ||
+      pluginConfig.releaseImageTag ||
+      channel
+    const tags = [releaseImageTag, ctx.nextRelease.version]
     if (pluginConfig.additionalTags && pluginConfig.additionalTags.length > 0) {
       tags.push(...pluginConfig.additionalTags)
     }

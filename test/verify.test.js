@@ -2,6 +2,7 @@
 const { describe, it, before, after } = require('mocha')
 const { expect } = require('chai')
 const mock = require('mock-require')
+const { DockerMock } = require('./shared')
 
 describe('Verify', () => {
   const env = {}
@@ -10,16 +11,6 @@ describe('Verify', () => {
   const pluginConfig = {}
 
   before(() => {
-    class DockerMock {
-      checkAuth({ password, serveraddress, username }) {
-        return new Promise((resolve, reject) => {
-          if (username === 'error') {
-            return reject(new Error('invalid login'))
-          }
-          resolve()
-        })
-      }
-    }
     mock('dockerode', DockerMock)
     verify = require('../src/verify')
   })

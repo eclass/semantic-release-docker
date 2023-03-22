@@ -1,50 +1,25 @@
-/* eslint-disable require-jsdoc */
-const { describe, it, before, after } = require('mocha')
+const { describe, it, before, beforeEach, after } = require('mocha')
 const { expect } = require('chai')
 const mock = require('mock-require')
+const { createContext, createConfig, DockerMock, tags } = require('./shared')
 
 describe('Prepare', () => {
-  const ctx = {
-    env: { DOCKER_USER: 'user', DOCKER_PASSWORD: 'password' },
-    nextRelease: { version: '1.0.0' },
-    logger: { log: () => ({}), error: () => ({}) },
-  }
   let prepare
-  /** @type {import('../src/types').Config} */
-  const pluginConfig = {
-    baseImageName: 'ci.example.com/myapp',
-    registries: [
-      {
-        user: 'DOCKER_USER',
-        password: 'DOCKER_PASSWORD',
-        url: 'registry.example.com',
-        imageName: 'registry.example.com/error',
-      },
-    ],
-  }
 
   before(() => {
-    class DockerImage {
-      tag({ repo, tag }) {
-        return new Promise((resolve, reject) => {
-          if (/error/.test(repo)) {
-            return reject(new Error('invalid image'))
-          }
-          resolve()
-        })
-      }
-    }
-    class DockerMock {
-      getImage(imageName) {
-        return new DockerImage()
-      }
-    }
+    tags.splice(0, tags.length)
     mock('dockerode', DockerMock)
     prepare = require('../src/prepare')
   })
 
+  beforeEach(() => {
+    tags.splice(0, tags.length)
+  })
+
   it('expect a EDOCKERIMAGETAG error', async () => {
     try {
+      const pluginConfig = createConfig()
+      const ctx = createContext()
       await prepare(pluginConfig, ctx)
     } catch (errs) {
       const err = errs._errors[0]
@@ -54,13 +29,25 @@ describe('Prepare', () => {
   })
 
   it('expect success prepare', async () => {
+    const pluginConfig = createConfig()
+    const ctx = createContext()
     pluginConfig.registries[0].imageName = 'registry.example.com/myapp'
     pluginConfig.additionalTags = ['beta']
     expect(await prepare(pluginConfig, ctx)).to.be.a('undefined')
+    expect(tags).include('beta')
+    expect(tags).include('latest')
+  })
+
+  it('prepare with custom branch', async () => {
+    const pluginConfig = createConfig()
+    const ctx = createContext()
+    pluginConfig.registries[0].imageName = 'registry.example.com/myapp'
+    ctx.nextRelease.channel = 'staging'
+    expect(await prepare(pluginConfig, ctx)).to.be.a('undefined')
+    expect(tags).include('staging')
   })
 
   after(() => {
     mock.stopAll()
   })
 })
-/* eslint-enable require-jsdoc */
