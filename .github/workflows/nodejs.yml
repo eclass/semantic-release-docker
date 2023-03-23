@@ -10,7 +10,7 @@ jobs:
         node: ['14.19.0', '16.14.0', '17.4.0']
     name: Node ${{ matrix.node }} testing
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
@@ -41,7 +41,7 @@ jobs:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: '17.4.0'
@@ -72,7 +72,7 @@ jobs:
     needs: coverage
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - uses: actions/setup-node@v2
         with:
           node-version: '17.4.0'
