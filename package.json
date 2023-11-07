@@ -45,7 +45,7 @@
     "@types/chai": "4.3.5",
     "@types/dockerode": "3.3.18",
     "@types/mocha": "9.1.1",
-    "@types/mock-require": "2.0.1",
+    "@types/mock-require": "2.0.3",
     "@types/node": "17.0.17",
     "@types/semantic-release": "20.0.1",
     "chai": "4.3.7",
