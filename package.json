@@ -50,7 +50,7 @@
     "@types/semantic-release": "20.0.1",
     "chai": "4.3.7",
     "eslint": "8.36.0",
-    "eslint-config-prettier": "8.8.0",
+    "eslint-config-prettier": "8.10.0",
     "eslint-plugin-array-func": "3.1.8",
     "eslint-plugin-eslint-comments": "3.2.0",
     "eslint-plugin-import": "2.27.5",
